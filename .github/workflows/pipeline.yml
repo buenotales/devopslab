@@ -2,7 +2,7 @@
 name: DevOpsLab Pipeline
 
 # Evento que irá acionar a pipeline
-on: 
+on:
   push:
     branches:
       - main
@@ -21,9 +21,15 @@ jobs:
 
       - name: Install Requirements
         run:  pip install flask
-              
+
       - name: Unit Test
         run: python -m unittest -v test
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Deploy:
     needs: Build
@@ -38,7 +44,7 @@ jobs:
       # Autenticação do Heroku CLI via API TOKEN
       # https://devcenter.heroku.com/articles/authentication
       - name: Heroku Login
-        run: | 
+        run: |
             cat > ~/.netrc <<EOF
               machine api.heroku.com
                 login $HEROKU_EMAIL
