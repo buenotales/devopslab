@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download do Repositório
-        uses: actions/checkout@v2       # https://github.com/actions/checkout
+        uses: actions/checkout@v3       # https://github.com/actions/checkout
 
       - name: Setup Python
-        uses: actions/setup-python@v2   # https://github.com/actions/setup-python
+        uses: actions/setup-python@v4   # https://github.com/actions/setup-python
         with:
           python-version: '3.7.13'
 
       - name: Install Requirements
-        run:  pip install flask flash-wtf
+        run:  pip install flask flask-wtf
 
       - name: Unit Test
         run: python -m unittest -v test
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2 # https://github.com/actions/checkout
+        uses: actions/checkout@v3 # https://github.com/actions/checkout
 
       - name: Auth GCP
         uses: 'google-github-actions/auth@v1' # https://github.com/google-github-actions/auth
